@@ -35,7 +35,7 @@ export const login = async (req: Request, res: Response) => {
 
     await authService.createRefreshToken(user.id, refreshToken, new Date(Date.now() + 7 * 24 * 60 * 60 * 1000))
 
-    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'strict', maxAge: 30 * 24 * 60 * 60 * 1000 })
+    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 30 * 24 * 60 * 60 * 1000, path: '/' })
 
     res.json({ accessToken, user: { id: user.id, email: user.email, fullName: user.fullName } })
 }
@@ -64,7 +64,7 @@ export const refreshToken = async (req: Request, res: Response) => {
 
         await authService.createRefreshToken(decoded.userId, newRefreshToken, new Date(Date.now() + 7 * 24 * 60 * 60 * 1000))
 
-        res.cookie('refreshToken', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'strict', maxAge: 30 * 24 * 60 * 60 * 1000 })
+        res.cookie('refreshToken', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 30 * 24 * 60 * 60 * 1000, path: '/' })
 
         res.json({ accessToken: newAccessToken })
     }
