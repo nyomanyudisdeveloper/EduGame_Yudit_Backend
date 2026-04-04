@@ -19,4 +19,8 @@ app.use(cookieParser());
 app.use('/api/game', gameRoutes);
 app.use('/api/auth', authRoutes);
 
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
+});
+
 export default app;
