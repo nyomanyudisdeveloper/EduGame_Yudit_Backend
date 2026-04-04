@@ -24,7 +24,7 @@ export const getGameById = async (id: string) => {
 
 export const getListModuleGameById = async (id: string) => {
     const game = await sql`
-        SELECT b.id, b.name, b.description, b.level, b.thumbnail_link
+        SELECT b.id, b.name, b.description, b.level, b.thumbnail_link, b.path_trial_game
         FROM game_master a 
         JOIN game_module b
         ON b.game_id = a.id
@@ -33,3 +33,4 @@ export const getListModuleGameById = async (id: string) => {
     `;
     return game;
 }
+
