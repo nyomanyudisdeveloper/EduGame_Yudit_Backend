@@ -41,5 +41,26 @@ export const createGameSession = async (gameModuleId: string, name: string, dead
         RETURNING id
     `;
     return session[0]?.id;
-}   
+}
+
+export const getListGameSessions = async(userId: string) => { 
+    const listGameSessios = await sql`
+    SELECT CONCAT(c.name,' - ',b.name) as game_name, a.id as game_session_id, 
+    a.name as name_session, 
+    TO_CHAR(a.deadline_date_from,'FMDD FMMonth YYYY') as deadline_date_from, 
+    TO_CHAR(a.deadline_date_to,'FMDD FMMonth YYYY') AS deadline_date_to
+    , COUNT(d.*) as total_participant
+    FROM game_session a
+    JOIN game_module b 
+    ON a.game_module_id = b.id
+    JOIN game_master c 
+    ON b.game_id = c.id
+    LEFT JOIN game_session_detail d
+    ON a.id = d.game_session_id
+    WHERE a.updated_by = ${userId}
+    GROUP BY c.name,b.name,a.id , a.name , a.deadline_date_from, a.deadline_date_to
+    ORDER BY a.created_at DESC
+    `
+    return listGameSessios
+} 
 

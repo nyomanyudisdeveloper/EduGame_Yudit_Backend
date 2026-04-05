@@ -41,3 +41,13 @@ export const createGameSession = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error creating game session' });
     }
 }
+
+export const getListGameSessions = async (req: Request, res: Response) => {
+    const userId = (req as any).userId;
+    try {
+        const listGameSessions = await gameService.getListGameSessions(userId);
+        res.status(201).json(listGameSessions);
+    } catch (error) {
+        res.status(500).json({ message: 'Error creating game session' });
+    }
+}

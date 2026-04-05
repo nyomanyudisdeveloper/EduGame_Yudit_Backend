@@ -15,3 +15,7 @@ export const getListModuleGameById = async (id: string) => {
 export const createGameSession = async (gameModuleId: string, name: string, deadlineDateFrom: string, deadlineDateTo: string, userId:string) => {
     return await gameRepo.createGameSession(gameModuleId, name, deadlineDateFrom, deadlineDateTo,userId);
 }
+
+export const getListGameSessions = async (userId: string) => {
+    return await gameRepo.getListGameSessions(userId)
+}
