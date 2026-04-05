@@ -64,3 +64,44 @@ export const getListGameSessions = async(userId: string) => {
     return listGameSessios
 } 
 
+export const getGameSession = async (sessionId:string) => {
+    const sessionDetail = await sql`
+        SELECT b.path_assign_game , CONCAT(c.name,' - ',b.name) as game_name, a.id as game_session_id, 
+        a.name as name_session, 
+        TO_CHAR(a.deadline_date_from,'FMDD FMMonth YYYY') as deadline_date_from, 
+        TO_CHAR(a.deadline_date_to,'FMDD FMMonth YYYY') AS deadline_date_to
+        FROM game_session a
+        JOIN game_module b 
+        ON a.game_module_id = b.id
+        JOIN game_master c 
+        ON b.game_id = c.id
+        WHERE a.id = ${sessionId}
+        ORDER BY a.created_at DESC
+    `
+
+    return sessionDetail[0]
+}
+
+export const createGameSessionDetail = async(game_session_id: string, student_name:string, ) => {
+    const session : { id: string }[] = await sql`
+        INSERT INTO game_session_detail (game_session_id, student_name, level, score, duration)
+        VALUES (${game_session_id},${student_name},1,0,null)
+        RETURNING id
+
+    `;
+    return session[0]?.id;
+}
+
+
+export const getGameSessionDetail = async(studentName: string, gameSessionId:string) => { 
+    const gameSessionDetail = await sql`
+    SELECT a.student_name, a.level, a.score, a.duration
+    FROM game_session_detail a
+    JOIN game_session b
+    ON a.game_session_id = b.id
+    WHERE a.student_name = ${studentName}
+    AND a.game_session_id = ${gameSessionId}
+    `
+    return gameSessionDetail[0]
+} 
+

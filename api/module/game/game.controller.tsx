@@ -51,3 +51,34 @@ export const getListGameSessions = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error creating game session' });
     }
 }
+
+export const createGameSessionDetail = async (req: Request, res: Response) => {
+    const {game_session_id,student_name} = req.body
+    try {
+        const sessionDetailID = await gameService.createGameSessionDetail(game_session_id,student_name);
+        res.status(201).json({id:sessionDetailID});
+    } catch (error) {
+        res.status(500).json({ message: 'Error creating game session detail' });
+    }
+}
+
+export const getGameSession = async (req:Request, res:Response) => {
+    try{
+        const {id} = req.params
+        const gameSessionDetail = await gameService.getGameSession(id)
+        res.status(201).json(gameSessionDetail)
+    }
+     catch (error) {
+        res.status(500).json({ message: 'Error creating game session' });
+    }
+}
+
+// export const getGameSessionDetail = async (req: Request, res: Response) => {
+//     try {
+//         const {}
+//         const listGameSessions = await gameService.getGameSessionDetail(userId);
+//         res.status(201).json(listGameSessions);
+//     } catch (error) {
+//         res.status(500).json({ message: 'Error creating game session' });
+//     }
+// }

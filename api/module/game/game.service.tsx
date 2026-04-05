@@ -19,3 +19,15 @@ export const createGameSession = async (gameModuleId: string, name: string, dead
 export const getListGameSessions = async (userId: string) => {
     return await gameRepo.getListGameSessions(userId)
 }
+
+export const createGameSessionDetail = async(game_session_id:string,student_name:string) => {
+    return await gameRepo.createGameSessionDetail(game_session_id,student_name)
+}
+
+export const getGameSession = async(sessionId:string) => {
+    return await gameRepo.getGameSession(sessionId)
+} 
+
+export const getGameSessionDetail = async(studentName: string, sessionId: string) => {
+    return await gameRepo.getGameSessionDetail(studentName,sessionId)
+}
