@@ -32,6 +32,10 @@ export const getGameSessionDetail = async(sessionDetailID: string) => {
     return await gameRepo.getGameSessionDetail(sessionDetailID)
 }
 
-export const updateGameSessionDetail = async(sessionDetailID: string, level: number, score: number, duration: Date) => {
-    return await gameRepo.updateGameSessionDetail(sessionDetailID,level,score,duration)
+export const updateGameSessionDetail = async(sessionDetailID: string, level: number, score: number) => {
+    return await gameRepo.updateGameSessionDetail(sessionDetailID,level,score)
+}
+
+export const getListGameSessionDetail = async (gameSessionID: string) => {
+    return await gameRepo.getListGameSessionDetail(gameSessionID)
 }

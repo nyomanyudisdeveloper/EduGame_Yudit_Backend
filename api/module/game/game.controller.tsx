@@ -86,10 +86,20 @@ export const getGameSessionDetail = async (req: Request, res: Response) => {
 export const updateGameSessionDetail = async (req: Request, res: Response) => {
     try{
         const {sessionDetailID} = req.params
-        const {level,score,duration} = req.body
-        const listGameSessions = await gameService.updateGameSessionDetail(sessionDetailID,level,score,duration);
+        const {level,score} = req.body
+        const listGameSessions = await gameService.updateGameSessionDetail(sessionDetailID,level,score);
         res.status(201).json(listGameSessions);
     }catch (error) {
+        res.status(500).json({ message: 'Error creating game session' });
+    }
+}
+
+export const getListGameSessionDetail = async (req: Request, res: Response) => {
+    try{
+        const {sessionID} = req.params
+        const listGameSessionDetail = await gameService.getListGameSessionDetail(sessionID)
+        res.status(201).json(listGameSessionDetail);
+    }catch(error) {
         res.status(500).json({ message: 'Error creating game session' });
     }
 }

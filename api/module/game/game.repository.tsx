@@ -102,19 +102,25 @@ export const getGameSessionDetail = async(sessionDetailID: string) => {
     return gameSessionDetail[0]
 } 
 
-export const updateGameSessionDetail = async(sessionDetailID: string, level: number, score: number, duration: Date) => {
-    console.log(`
-        UPDATE game_session_detail
-        SET level = ${level}, score = ${score}, duration = ${duration}
-        WHERE id = ${sessionDetailID}
-        RETURNING id
-    `)
+export const updateGameSessionDetail = async(sessionDetailID: string, level: number, score: number) => {
     const response = await sql`
         UPDATE game_session_detail
-        SET level = ${level}, score = ${score}, duration = ${duration}
+        SET level = ${level}, score = ${score}, updated_at = ${new Date()}
         WHERE id = ${sessionDetailID}
         RETURNING id
     `
     return response[0]
+}
+
+export const getListGameSessionDetail = async (gameSessionID: string) => {
+    const response = await sql`
+        SELECT a.student_name,level,score,
+        ROUND(EXTRACT(HOUR FROM updated_at - created_at)) AS hours,
+        ROUND(EXTRACT(MINUTE FROM updated_at - created_at)) AS minutes,
+        ROUND(EXTRACT(SECOND FROM updated_at - created_at)) AS seconds
+        FROM game_session_detail a
+        WHERE a.game_session_id = ${gameSessionID}
+    `
+    return response
 }
 
