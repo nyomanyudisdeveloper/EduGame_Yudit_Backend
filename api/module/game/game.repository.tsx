@@ -93,15 +93,28 @@ export const createGameSessionDetail = async(game_session_id: string, student_na
 }
 
 
-export const getGameSessionDetail = async(studentName: string, gameSessionId:string) => { 
+export const getGameSessionDetail = async(sessionDetailID: string) => { 
     const gameSessionDetail = await sql`
-    SELECT a.student_name, a.level, a.score, a.duration
-    FROM game_session_detail a
-    JOIN game_session b
-    ON a.game_session_id = b.id
-    WHERE a.student_name = ${studentName}
-    AND a.game_session_id = ${gameSessionId}
+    SELECT student_name, level, score, duration
+    FROM game_session_detail
+    WHERE id = ${sessionDetailID}
     `
     return gameSessionDetail[0]
 } 
+
+export const updateGameSessionDetail = async(sessionDetailID: string, level: number, score: number, duration: Date) => {
+    console.log(`
+        UPDATE game_session_detail
+        SET level = ${level}, score = ${score}, duration = ${duration}
+        WHERE id = ${sessionDetailID}
+        RETURNING id
+    `)
+    const response = await sql`
+        UPDATE game_session_detail
+        SET level = ${level}, score = ${score}, duration = ${duration}
+        WHERE id = ${sessionDetailID}
+        RETURNING id
+    `
+    return response[0]
+}
 
