@@ -41,7 +41,7 @@ export const login = async (req: Request, res: Response) => {
 }
 
 export const refreshToken = async (req: Request, res: Response) => {
-    console.log("Refreshing token...")
+    
     const refreshToken = req.cookies.refreshToken
     
     if (!refreshToken) {
@@ -54,7 +54,6 @@ export const refreshToken = async (req: Request, res: Response) => {
         const stored = await authService.findRefreshToken(refreshToken)
         
         if (!stored) {
-            console.log("Refresh token not found in database")
             return res.status(403).json({ message: "Invalid refresh token" })
         }
         await authService.deleteRefreshToken(refreshToken)

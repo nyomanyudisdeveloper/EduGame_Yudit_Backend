@@ -34,3 +34,12 @@ export const getListModuleGameById = async (id: string) => {
     return game;
 }
 
+export const createGameSession = async (gameModuleId: string, name: string, deadlineDateFrom: string, deadlineDateTo: string, userId: string) => {
+    const session : { id: string }[] = await sql`
+        INSERT INTO game_session (game_module_id, name, deadline_date_from, deadline_date_to, created_by, updated_by)
+        VALUES (${gameModuleId}, ${name}, ${deadlineDateFrom}, ${deadlineDateTo}, ${userId}, ${userId})
+        RETURNING id
+    `;
+    return session[0]?.id;
+}   
+
