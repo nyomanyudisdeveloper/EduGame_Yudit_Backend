@@ -24,7 +24,7 @@ export const getGameById = async (id: string) => {
 
 export const getListModuleGameById = async (id: string) => {
     const game = await sql`
-        SELECT b.id, b.name, b.description, b.level, b.thumbnail_link, b.path_trial_game
+        SELECT b.id, b.name, b.description, b.level, b.thumbnail_link, b.path_game
         FROM game_master a 
         JOIN game_module b
         ON b.game_id = a.id
@@ -66,7 +66,7 @@ export const getListGameSessions = async(userId: string) => {
 
 export const getGameSession = async (sessionId:string) => {
     const sessionDetail = await sql`
-        SELECT b.path_assign_game , CONCAT(c.name,' - ',b.name) as game_name, a.id as game_session_id, 
+        SELECT b.path_game , CONCAT(c.name,' - ',b.name) as game_name, a.id as game_session_id, 
         a.name as name_session, 
         TO_CHAR(a.deadline_date_from,'FMDD FMMonth YYYY') as deadline_date_from, 
         TO_CHAR(a.deadline_date_to,'FMDD FMMonth YYYY') AS deadline_date_to
