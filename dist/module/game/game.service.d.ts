@@ -1,0 +1,11 @@
+export declare const getListGames: () => Promise<import("postgres").RowList<import("postgres").Row[]>>;
+export declare const getGameById: (id: string) => Promise<import("postgres").Row | undefined>;
+export declare const getListModuleGameById: (id: string) => Promise<import("postgres").RowList<import("postgres").Row[]>>;
+export declare const createGameSession: (gameModuleId: string, name: string, deadlineDateFrom: string, deadlineDateTo: string, userId: string) => Promise<string | undefined>;
+export declare const getListGameSessions: (userId: string) => Promise<import("postgres").RowList<import("postgres").Row[]>>;
+export declare const createGameSessionDetail: (game_session_id: string, student_name: string) => Promise<string | undefined>;
+export declare const getGameSession: (sessionId: string) => Promise<import("postgres").Row | undefined>;
+export declare const getGameSessionDetail: (sessionDetailID: string) => Promise<import("postgres").Row | undefined>;
+export declare const updateGameSessionDetail: (sessionDetailID: string, level: number, score: number) => Promise<import("postgres").Row | undefined>;
+export declare const getListGameSessionDetail: (gameSessionID: string) => Promise<import("postgres").RowList<import("postgres").Row[]>>;
+//# sourceMappingURL=game.service.d.ts.map
