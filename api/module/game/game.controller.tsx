@@ -65,6 +65,9 @@ export const createGameSessionDetail = async (req: Request, res: Response) => {
 export const getGameSession = async (req:Request, res:Response) => {
     try{
         const {id} = req.params
+        if (typeof id !== 'string') {
+            return res.status(400).json({ message: 'Invalid id' });
+        }
         const gameSessionDetail = await gameService.getGameSession(id)
         res.status(201).json(gameSessionDetail)
     }
@@ -76,6 +79,9 @@ export const getGameSession = async (req:Request, res:Response) => {
 export const getGameSessionDetail = async (req: Request, res: Response) => {
     try {
         const {sessionDetailID} = req.params
+        if (typeof sessionDetailID !== 'string') {
+            return res.status(400).json({ message: 'Invalid sessionDetailID' });
+        }
         const listGameSessions = await gameService.getGameSessionDetail(sessionDetailID);
         res.status(201).json(listGameSessions);
     } catch (error) {
@@ -86,6 +92,9 @@ export const getGameSessionDetail = async (req: Request, res: Response) => {
 export const updateGameSessionDetail = async (req: Request, res: Response) => {
     try{
         const {sessionDetailID} = req.params
+        if (typeof sessionDetailID !== 'string') {
+            return res.status(400).json({ message: 'Invalid sessionDetailID' });
+        }
         const {level,score} = req.body
         const listGameSessions = await gameService.updateGameSessionDetail(sessionDetailID,level,score);
         res.status(201).json(listGameSessions);
@@ -97,6 +106,9 @@ export const updateGameSessionDetail = async (req: Request, res: Response) => {
 export const getListGameSessionDetail = async (req: Request, res: Response) => {
     try{
         const {sessionID} = req.params
+        if (typeof sessionID !== 'string') {
+            return res.status(400).json({ message: 'Invalid sessionID' });
+        }
         const listGameSessionDetail = await gameService.getListGameSessionDetail(sessionID)
         res.status(201).json(listGameSessionDetail);
     }catch(error) {
