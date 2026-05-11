@@ -23,7 +23,7 @@ export const generateAccessToken = (userId: string) => {
   return jwt.sign(
     { userId },
     process.env.ACCESS_SECRET!,
-    { expiresIn: "15m" }
+    { expiresIn: "60m" }
   )
 }
 
